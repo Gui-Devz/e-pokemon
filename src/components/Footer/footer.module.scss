@@ -1,0 +1,40 @@
+.supraContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+
+  background: var(--gray-400);
+  color: var(--red-500);
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 2rem 1.5rem;
+  }
+  .follow {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-right: 1rem;
+    }
+
+    .socialMedias {
+      display: flex;
+
+      align-items: center;
+      gap: 0.4rem;
+
+      svg {
+        color: var(--white);
+      }
+    }
+  }
+}
