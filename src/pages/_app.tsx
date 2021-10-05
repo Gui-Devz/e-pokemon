@@ -1,7 +1,12 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
+import { PokedexProvider } from "../hooks/usePokedex";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <PokedexProvider>
+      <Component {...pageProps} />
+    </PokedexProvider>
+  );
 }
 export default MyApp;
