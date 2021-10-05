@@ -5,6 +5,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 
 import styles from "./pokemon-card.module.scss";
+import { useState } from "react";
 
 type PokemonAttributes = {
   hp: number;
@@ -16,26 +17,32 @@ type PokemonAttributes = {
 type PokemonProfile = {
   name: string;
   pokemonImg: string;
-  attributes: PokemonAttributes[];
+  attributes: string[];
   abilities: string[];
-  favorite: boolean;
 };
 
 interface PokemonCardProps {
   pokemon: PokemonProfile;
+  toggleFavorites: (pokemonProfile: PokemonProfile) => void;
 }
 
-export function PokemonCard({ pokemon }: PokemonCardProps) {
+export function PokemonCard({ pokemon, toggleFavorites }: PokemonCardProps) {
+  const [favorite, setFavorite] = useState<boolean>(true);
+  const togglingFavorites = () => {
+    setFavorite(!favorite);
+    toggleFavorites(pokemon);
+  };
+
   return (
     <div className={styles.container}>
-      {true ? (
-        <div className={styles.favBtn}>
+      {favorite ? (
+        <button onClick={() => togglingFavorites()} className={styles.favBtn}>
           <AiOutlineHeart />
-        </div>
+        </button>
       ) : (
-        <div className={styles.favBtn}>
+        <button onClick={() => togglingFavorites()} className={styles.favBtn}>
           <AiFillHeart />
-        </div>
+        </button>
       )}
 
       <div className={styles.pokemonMainInfo}>
@@ -57,10 +64,9 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
               <p>Sp:</p>
             </div>
             <div className={styles.values}>
-              {pokemon.attributes &&
-                pokemon.attributes.map((att) => {
-                  return <span key={pokemon.name}>{att}</span>;
-                })}
+              {pokemon.attributes.map((att, index) => {
+                return <span key={index}>{att}</span>;
+              })}
             </div>
           </div>
         </div>
