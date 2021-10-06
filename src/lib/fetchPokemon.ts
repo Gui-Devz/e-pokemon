@@ -1,5 +1,8 @@
 const fetcher = (url) =>
   fetch(url).then((res) => {
+    if (res.status === 404) {
+      return undefined;
+    }
     return res.json();
   });
 
