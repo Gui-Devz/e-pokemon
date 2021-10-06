@@ -28,7 +28,7 @@ interface PokedexProps {
 }
 
 export function Pokedex() {
-  const { pokedex, toggleFavorites, memoizedFetchPokedex } = usePokedex();
+  const { pokedex, favorites, toggleFavorites, fetchPokedex } = usePokedex();
 
   return (
     <div className={styles.container}>
@@ -39,6 +39,7 @@ export function Pokedex() {
               <React.Fragment key={index}>
                 <PokemonCard
                   pokemon={pokemon}
+                  favorites={favorites}
                   toggleFavorites={toggleFavorites}
                 />
               </React.Fragment>
@@ -46,7 +47,7 @@ export function Pokedex() {
           })}
       </div>
       <div className={styles.btnLoadMore}>
-        <button onClick={() => memoizedFetchPokedex(pokedex.length)}>
+        <button onClick={() => fetchPokedex("", pokedex.length)}>
           Load more
         </button>
       </div>
