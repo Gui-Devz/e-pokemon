@@ -4,28 +4,44 @@ import { BsTrash } from "react-icons/bs";
 
 import styles from "./cart-pokemon-card.module.scss";
 
-export function CartPokemonCard() {
+type PokemonProfileInCart = {
+  name: string;
+  pokemonImg: string;
+  attributes: string[];
+  abilities: string[];
+  amount?: number;
+};
+
+interface CartPokemonCardProps {
+  pokemon: PokemonProfileInCart;
+  removePokemonInCart: (pokemonProfile: PokemonProfileInCart) => void;
+}
+
+export function CartPokemonCard({
+  pokemon,
+  removePokemonInCart,
+}: CartPokemonCardProps) {
   return (
     <div className={styles.container}>
       <div className={styles.trashCan}>
-        <button>
+        <button onClick={() => removePokemonInCart(pokemon)}>
           <BsTrash />
           <span>remove</span>
         </button>
       </div>
       <div className={styles.pokemonImg}>
         <Image
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+          src={pokemon.pokemonImg}
           width={60}
           height={50}
-          alt={`pokemon`}
+          alt={`pokemon ${pokemon.name}`}
         />
       </div>
       <div className={styles.pokemonContent}>
-        <p>Ivysaur</p>
+        <p>{pokemon.name}</p>
         <div className={styles.pokemonCount}>
           <button>-</button>
-          <span>1</span>
+          <span>{pokemon.amount}</span>
           <button>+</button>
         </div>
       </div>
@@ -49,15 +65,14 @@ export function CartPokemonCard() {
           </div>
           <div>
             <ul>
-              <li>30</li>
-              <li>30</li>
-              <li>30</li>
-              <li>30</li>
+              {pokemon.attributes.map((att, index) => {
+                return <li key={index}>{att}</li>;
+              })}
             </ul>
           </div>
         </div>
         <div className={styles.abilities}>
-          <span>Abilities:</span> Overgrow, chlorophyll
+          <span>Abilities:</span> {pokemon.abilities.join(", ")}
         </div>
       </div>
     </div>
