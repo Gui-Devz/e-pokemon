@@ -1,11 +1,14 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 import { PokedexProvider } from "../hooks/usePokedex";
+import { CartProvider } from "../hooks/useCart";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <PokedexProvider>
-      <Component {...pageProps} />
+      <CartProvider>
+        <Component {...pageProps} />
+      </CartProvider>
     </PokedexProvider>
   );
 }
