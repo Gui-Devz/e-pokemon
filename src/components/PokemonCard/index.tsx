@@ -6,19 +6,20 @@ import { AiFillHeart } from "react-icons/ai";
 
 import styles from "./pokemon-card.module.scss";
 import { useCallback, useEffect, useState } from "react";
-
-type PokemonAttributes = {
-  hp: number;
-  atk: number;
-  def: number;
-  sp: number;
-};
+import { useCart } from "../../hooks/useCart";
 
 type PokemonProfile = {
   name: string;
   pokemonImg: string;
   attributes: string[];
   abilities: string[];
+};
+type PokemonProfileInCart = {
+  name: string;
+  pokemonImg: string;
+  attributes: string[];
+  abilities: string[];
+  amount?: number;
 };
 
 interface PokemonCardProps {
@@ -32,10 +33,16 @@ export function PokemonCard({
   favorites,
   toggleFavorites,
 }: PokemonCardProps) {
+  const { addPokemonInCart, cart } = useCart();
   const [favorite, setFavorite] = useState<boolean>(true);
+
   const togglingFavorites = () => {
     toggleFavorites(pokemon);
   };
+
+  const pokemonAmountInCart: PokemonProfileInCart[] = cart.filter(
+    (pok) => pok.name === pokemon.name
+  );
 
   const memoizedCheckIfPokemonIsFavorite = useCallback(() => {
     const passed = favorites.some((favorite) => favorite.name === pokemon.name);
@@ -93,13 +100,17 @@ export function PokemonCard({
         <p className={styles.abilities}>{pokemon.abilities.join(", ")}</p>
       </div>
       <div className={styles.addCart}>
-        <button>
+        <button onClick={() => addPokemonInCart(pokemon)}>
           <span className={styles.buttonContent}>
             <span className={styles.cartSVG}>
               <BsCart4 />
             </span>
             Add to Cart
-            <span className={styles.cartCount}>1</span>
+            {pokemonAmountInCart.length > 0 && (
+              <span className={styles.cartCount}>
+                {pokemonAmountInCart[0]?.amount}
+              </span>
+            )}
           </span>
         </button>
       </div>
