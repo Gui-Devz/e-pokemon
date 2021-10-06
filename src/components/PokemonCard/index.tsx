@@ -5,7 +5,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 
 import styles from "./pokemon-card.module.scss";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type PokemonAttributes = {
   hp: number;
@@ -23,15 +23,32 @@ type PokemonProfile = {
 
 interface PokemonCardProps {
   pokemon: PokemonProfile;
+  favorites: PokemonProfile[];
   toggleFavorites: (pokemonProfile: PokemonProfile) => void;
 }
 
-export function PokemonCard({ pokemon, toggleFavorites }: PokemonCardProps) {
+export function PokemonCard({
+  pokemon,
+  favorites,
+  toggleFavorites,
+}: PokemonCardProps) {
   const [favorite, setFavorite] = useState<boolean>(true);
   const togglingFavorites = () => {
-    setFavorite(!favorite);
     toggleFavorites(pokemon);
   };
+
+  const memoizedCheckIfPokemonIsFavorite = useCallback(() => {
+    const passed = favorites.some((favorite) => favorite.name === pokemon.name);
+    if (passed) {
+      setFavorite(false);
+    } else {
+      setFavorite(true);
+    }
+  }, [favorites, pokemon]);
+
+  useEffect(() => {
+    memoizedCheckIfPokemonIsFavorite();
+  }, [memoizedCheckIfPokemonIsFavorite]);
 
   return (
     <div className={styles.container}>
