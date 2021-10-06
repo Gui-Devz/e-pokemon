@@ -46,11 +46,13 @@ export function Pokedex() {
             );
           })}
       </div>
-      <div className={styles.btnLoadMore}>
-        <button onClick={() => fetchPokedex("", pokedex.length)}>
-          Load more
-        </button>
-      </div>
+      {pokedex.length > 1 && (
+        <div className={styles.btnLoadMore}>
+          <button onClick={() => fetchPokedex("", pokedex.length)}>
+            Load more
+          </button>
+        </div>
+      )}
     </div>
   );
 }
