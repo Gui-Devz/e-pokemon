@@ -36,6 +36,7 @@ export function Header({ onOpen }: HeaderProps) {
           <div className={styles.input}>
             <input
               type="text"
+              minLength={5}
               onChange={(e) => setPokemonName(e.target.value)}
               placeholder="Search for your pokemón"
             />
