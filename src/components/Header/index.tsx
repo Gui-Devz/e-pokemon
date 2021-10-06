@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { FormEvent, useState } from "react";
 
 import { usePokedex } from "../../hooks/usePokedex";
+
+import { useCart } from "../../hooks/useCart";
 
 import logoImg from "../../assets/logo.png";
 
@@ -8,7 +11,6 @@ import { FiMapPin } from "react-icons/fi";
 import { FiSearch } from "react-icons/fi";
 
 import styles from "./header.module.scss";
-import { FormEvent, useState } from "react";
 
 interface HeaderProps {
   onOpen: () => void;
@@ -17,6 +19,7 @@ interface HeaderProps {
 export function Header({ onOpen }: HeaderProps) {
   const { fetchPokedex, setFavoritesInPokedex, fetchPokemonByName } =
     usePokedex();
+  const { cart } = useCart();
   const [pokemonName, setPokemonName] = useState<string>("");
 
   const handlingSearchPokemonByName = (e: FormEvent) => {
@@ -57,7 +60,7 @@ export function Header({ onOpen }: HeaderProps) {
             </li>
             <li className={styles.cart}>
               <a href="#" onClick={() => onOpen()}>
-                My cart <span>1</span>
+                My cart <span>{cart.length}</span>
               </a>
             </li>
             <li>
