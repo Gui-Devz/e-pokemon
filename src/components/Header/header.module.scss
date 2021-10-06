@@ -63,10 +63,10 @@
   }
 
   .cartFavs {
-    margin-right: 2rem;
     nav {
       ul {
         display: flex;
+        justify-content: space-between;
         gap: 2rem;
 
         li {
