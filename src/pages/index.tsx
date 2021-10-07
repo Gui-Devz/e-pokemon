@@ -13,6 +13,7 @@ export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [isFinishedBuyOpen, setIsFinishedBuyOpen] = useState<boolean>(false);
   const [showButtonLoadMore, setShowButtonLoadMore] = useState<boolean>(true);
+  const [notFoundPokemonName, setNotFoundPokemonName] = useState<string>("");
 
   /* function to control if the button 'load more' inside Pokedex component will
   be shown. */
@@ -55,10 +56,14 @@ export default function Home() {
         <Header
           onOpen={onCartModalOpen}
           handlingShowingButtonLoadMore={handlingShowingButtonLoadMore}
+          setNotFoundPokemonName={setNotFoundPokemonName}
         />
         <section className={styles.main}>
           <h1>Choose your pokémon</h1>
-          <Pokedex showButtonLoadMore={showButtonLoadMore} />
+          <Pokedex
+            showButtonLoadMore={showButtonLoadMore}
+            notFoundPokemonName={notFoundPokemonName}
+          />
         </section>
       </div>
       <Footer />
