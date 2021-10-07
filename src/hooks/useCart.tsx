@@ -5,7 +5,7 @@ type PokemonProfile = {
   pokemonImg: string;
   attributes: string[];
   abilities: string[];
-  amount: number;
+  amount?: number;
 };
 
 interface CartProviderProps {
@@ -13,7 +13,7 @@ interface CartProviderProps {
 }
 
 interface UpdateProductAmount {
-  pokemonProfile: number;
+  pokemonName: string;
   amount: number;
 }
 
@@ -21,14 +21,15 @@ interface CartContextData {
   cart: PokemonProfile[];
   addPokemonInCart: (pokemonProfile: PokemonProfile) => void;
   removePokemonInCart: (pokemonProfile: PokemonProfile) => void;
-  //updatePokemonAmount: ({ pokemonProfile, amount }: UpdateProductAmount) => void;
+  updatePokemonAmount: (pokemonName: string, amount: number) => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const [cart, setCart] = useState<PokemonProfile[]>(() => {
-    const storagedCart = localStorage.getItem("@IZA:cart");
+    const storagedCart =
+      typeof window !== "undefined" ? localStorage.getItem("@IZA:cart") : null;
 
     if (storagedCart) {
       return JSON.parse(storagedCart);
@@ -37,7 +38,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     return [];
   });
 
-  const addPokemonInCart = (pokemonProfile) => {
+  const addPokemonInCart = (pokemonProfile: PokemonProfile) => {
     const pokemonExistsInCart = cart.some(
       (pokemon) => pokemonProfile.name === pokemon.name
     );
@@ -50,7 +51,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
       setCart([...cart, pokemonProfileFormatted]);
 
-      localStorage.setItem(
+      localStorage?.setItem(
         "@IZA:cart",
         JSON.stringify([...cart, pokemonProfileFormatted])
       );
@@ -80,27 +81,58 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     cartFiltered.splice(pokemonIndex, 0, pokemonWithRightAmount[0]);
 
     setCart(cartFiltered);
-    localStorage.setItem("@IZA:cart", JSON.stringify(cartFiltered));
+    localStorage?.setItem("@IZA:cart", JSON.stringify(cartFiltered));
   };
 
-  const removePokemonInCart = (pokemonProfile) => {
+  const removePokemonInCart = (pokemonProfile: PokemonProfile) => {
     const cartFiltered = cart.filter(
       (pokemon) => pokemon.name !== pokemonProfile.name
     );
-    /* const passed = cart.find((pokemon) => pokemon.name === pokemonProfile.name);
-    if (passed) {
-      setCart(cartFiltered);
-      localStorage.setItem("@IZA:cart", JSON.stringify(cartFiltered));
-    } */
+
     setCart(cartFiltered);
-    localStorage.setItem("@IZA:cart", JSON.stringify(cartFiltered));
+    localStorage?.setItem("@IZA:cart", JSON.stringify(cartFiltered));
 
     return;
   };
 
+  const updatePokemonAmount = async (pokemonName: string, amount: number) => {
+    const cartFiltered = cart.filter((pokemon) => pokemon.name !== pokemonName);
+
+    /* This code block guarantees the order of the pokemons in the cart
+    won't change. */
+    let productIndex = 0;
+    let productAmount = cart.filter((pokemon, index) => {
+      if (pokemon.name === pokemonName) {
+        productIndex = index;
+        return true;
+      }
+      return false;
+    });
+
+    if (amount < 1) {
+      return;
+    }
+    productAmount[0] = {
+      ...productAmount[0],
+      amount: amount,
+    };
+
+    cartFiltered.splice(productIndex, 0, productAmount[0]);
+
+    //updating the cart with the right amount of the pokemon.
+    //updating the localStorage as well.
+    setCart(cartFiltered);
+    localStorage.setItem("@IZA:cart", JSON.stringify(cartFiltered));
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addPokemonInCart, removePokemonInCart }}
+      value={{
+        cart,
+        addPokemonInCart,
+        removePokemonInCart,
+        updatePokemonAmount,
+      }}
     >
       {children}
     </CartContext.Provider>
