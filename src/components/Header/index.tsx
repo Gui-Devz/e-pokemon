@@ -14,9 +14,10 @@ import styles from "./header.module.scss";
 
 interface HeaderProps {
   onOpen: () => void;
+  handlingShowingButtonLoadMore: (value: boolean) => void;
 }
 
-export function Header({ onOpen }: HeaderProps) {
+export function Header({ onOpen, handlingShowingButtonLoadMore }: HeaderProps) {
   const { fetchPokedex, setFavoritesInPokedex, fetchPokemonByName } =
     usePokedex();
   const { cart } = useCart();
@@ -25,8 +26,10 @@ export function Header({ onOpen }: HeaderProps) {
 
   const handlingSearchPokemonByName = (e: FormEvent) => {
     e.preventDefault();
-
-    fetchPokemonByName(pokemonName);
+    if (pokemonName.length > 0) {
+      fetchPokemonByName(pokemonName);
+      handlingShowingButtonLoadMore(false);
+    }
   };
 
   //guarantees the value displayed is same for the server(SSR).
@@ -44,7 +47,7 @@ export function Header({ onOpen }: HeaderProps) {
           <div className={styles.input}>
             <input
               type="text"
-              minLength={5}
+              minLength={3}
               onChange={(e) => setPokemonName(e.target.value)}
               placeholder="Search for your pokémon"
             />
@@ -59,17 +62,29 @@ export function Header({ onOpen }: HeaderProps) {
         <nav>
           <ul>
             <li className={styles.cart}>
-              <a href="#" onClick={() => fetchPokedex()}>
+              <a
+                href="#"
+                onClick={() => {
+                  fetchPokedex();
+                  handlingShowingButtonLoadMore(true);
+                }}
+              >
                 Pokedex
               </a>
             </li>
             <li className={styles.cart}>
               <a href="#" onClick={() => onOpen()}>
-                My cart <span>{cartSize}</span>
+                My cart {cartSize > 0 && <span>{cartSize}</span>}
               </a>
             </li>
             <li>
-              <a href="#" onClick={() => setFavoritesInPokedex()}>
+              <a
+                href="#"
+                onClick={() => {
+                  setFavoritesInPokedex();
+                  handlingShowingButtonLoadMore(false);
+                }}
+              >
                 Favorites
               </a>
             </li>
