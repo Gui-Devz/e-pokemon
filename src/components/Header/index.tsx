@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import { usePokedex } from "../../hooks/usePokedex";
 
@@ -20,14 +20,19 @@ export function Header({ onOpen }: HeaderProps) {
   const { fetchPokedex, setFavoritesInPokedex, fetchPokemonByName } =
     usePokedex();
   const { cart } = useCart();
+  const [cartSize, setCartSize] = useState<number>(0);
   const [pokemonName, setPokemonName] = useState<string>("");
 
   const handlingSearchPokemonByName = (e: FormEvent) => {
     e.preventDefault();
-    if (pokemonName.length > 4) {
-      fetchPokemonByName(pokemonName);
-    }
+
+    fetchPokemonByName(pokemonName);
   };
+
+  //guarantees the value displayed is same for the server(SSR).
+  useEffect(() => {
+    setCartSize(cart.length);
+  }, [cart]);
   return (
     <div className={styles.headerContainer}>
       <div className={styles.logo}>
@@ -41,7 +46,7 @@ export function Header({ onOpen }: HeaderProps) {
               type="text"
               minLength={5}
               onChange={(e) => setPokemonName(e.target.value)}
-              placeholder="Search for your pokemón"
+              placeholder="Search for your pokémon"
             />
             <button type="submit">
               <FiSearch color="#adadad" size="1.5em" />
@@ -60,7 +65,7 @@ export function Header({ onOpen }: HeaderProps) {
             </li>
             <li className={styles.cart}>
               <a href="#" onClick={() => onOpen()}>
-                My cart <span>{cart.length}</span>
+                My cart <span>{cartSize}</span>
               </a>
             </li>
             <li>
