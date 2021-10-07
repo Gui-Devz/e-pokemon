@@ -5,16 +5,22 @@ import styles from "./pokedex.module.scss";
 
 interface PokedexProps {
   showButtonLoadMore: boolean;
+  notFoundPokemonName: string;
 }
 
-export function Pokedex({ showButtonLoadMore }: PokedexProps) {
+export function Pokedex({
+  showButtonLoadMore,
+  notFoundPokemonName,
+}: PokedexProps) {
   const { pokedex, favorites, toggleFavorites, fetchPokedex } = usePokedex();
 
   return (
     <div className={styles.container}>
       {pokedex.length === 0 && (
-        <div>
-          <h2>Pokemon not found</h2>
+        <div className={styles.pokemonNotFound}>
+          <h2>
+            Pokemon <i>{`"${notFoundPokemonName}"`}</i> not found
+          </h2>
         </div>
       )}
 
