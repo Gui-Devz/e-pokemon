@@ -22,6 +22,7 @@ interface CartContextData {
   addPokemonInCart: (pokemonProfile: PokemonProfile) => void;
   removePokemonInCart: (pokemonProfile: PokemonProfile) => void;
   updatePokemonAmount: (pokemonName: string, amount: number) => void;
+  resetCart: () => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -125,6 +126,11 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     localStorage.setItem("@IZA:cart", JSON.stringify(cartFiltered));
   };
 
+  const resetCart = () => {
+    setCart([]);
+    localStorage?.setItem("@IZA:cart", JSON.stringify([]));
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -132,6 +138,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         addPokemonInCart,
         removePokemonInCart,
         updatePokemonAmount,
+        resetCart,
       }}
     >
       {children}
