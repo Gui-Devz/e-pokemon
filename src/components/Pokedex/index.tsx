@@ -1,33 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { usePokedex } from "../../hooks/usePokedex";
-import { fetchPokemon } from "../../lib/fetchPokemon";
 import { PokemonCard } from "../PokemonCard";
 import styles from "./pokedex.module.scss";
 
-type Pokemons = {
-  name: string;
-  url: string;
-};
-
-type PokemonAttributes = {
-  hp: number;
-  atk: number;
-  def: number;
-  sp: number;
-};
-
-type PokemonProfile = {
-  name: string;
-  pokemonImg: string;
-  attributes: PokemonAttributes[];
-  abilities: string[];
-};
-
 interface PokedexProps {
-  pokemonList: Pokemons[];
+  showButtonLoadMore: boolean;
 }
 
-export function Pokedex() {
+export function Pokedex({ showButtonLoadMore }: PokedexProps) {
   const { pokedex, favorites, toggleFavorites, fetchPokedex } = usePokedex();
 
   return (
@@ -52,7 +32,7 @@ export function Pokedex() {
             );
           })}
       </div>
-      {pokedex.length > 1 && (
+      {showButtonLoadMore && (
         <div className={styles.btnLoadMore}>
           <button onClick={() => fetchPokedex("", pokedex.length)}>
             Load more
