@@ -11,7 +11,7 @@ export function Footer() {
     <div className={styles.supraContainer}>
       <div className={styles.container}>
         <div className={styles.copyright}>
-          <p>&copy; 2021 IZA.com.br</p>
+          <p>&copy; 2021 IZA.com.vc</p>
         </div>
 
         <div className={styles.follow}>
