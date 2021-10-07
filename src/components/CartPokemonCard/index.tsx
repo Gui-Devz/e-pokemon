@@ -15,12 +15,26 @@ type PokemonProfileInCart = {
 interface CartPokemonCardProps {
   pokemon: PokemonProfileInCart;
   removePokemonInCart: (pokemonProfile: PokemonProfileInCart) => void;
+  updatePokemonAmount: (pokemonName: string, amount: number) => void;
 }
 
 export function CartPokemonCard({
   pokemon,
   removePokemonInCart,
+  updatePokemonAmount,
 }: CartPokemonCardProps) {
+  const handlingIncrementAmount = () => {
+    const sum = pokemon.amount + 1;
+
+    updatePokemonAmount(pokemon.name, sum);
+  };
+
+  const handlingDecrementAmount = () => {
+    const sub = pokemon.amount - 1;
+
+    updatePokemonAmount(pokemon.name, sub);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.trashCan}>
@@ -40,9 +54,14 @@ export function CartPokemonCard({
       <div className={styles.pokemonContent}>
         <p>{pokemon.name}</p>
         <div className={styles.pokemonCount}>
-          <button>-</button>
+          <button
+            onClick={() => handlingDecrementAmount()}
+            disabled={pokemon.amount === 1}
+          >
+            -
+          </button>
           <span>{pokemon.amount}</span>
-          <button>+</button>
+          <button onClick={() => handlingIncrementAmount()}>+</button>
         </div>
       </div>
       <div className={styles.pokemonInfo}>
