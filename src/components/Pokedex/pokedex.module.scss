@@ -2,6 +2,10 @@
   margin: 4rem auto 0;
   min-height: 50vh;
 
+  .pokemonNotFound {
+    text-align: center;
+  }
+
   .pokedex {
     display: grid;
     grid-template-columns: repeat(auto-fill, 250px);
