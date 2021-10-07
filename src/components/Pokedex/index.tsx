@@ -32,6 +32,12 @@ export function Pokedex() {
 
   return (
     <div className={styles.container}>
+      {pokedex.length === 0 && (
+        <div>
+          <h2>Pokemon not found</h2>
+        </div>
+      )}
+
       <div className={styles.pokedex}>
         {pokedex.length > 0 &&
           pokedex.map((pokemon, index) => {
