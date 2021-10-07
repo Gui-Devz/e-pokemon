@@ -1,34 +1,43 @@
 import Image from "next/image";
-import { FormEvent, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+import { Location } from "../Location";
 
 import { usePokedex } from "../../hooks/usePokedex";
-
 import { useCart } from "../../hooks/useCart";
 
-import logoImg from "../../assets/logo.png";
-
-import { FiMapPin } from "react-icons/fi";
 import { FiSearch } from "react-icons/fi";
+
+import logoImg from "../../assets/logo.png";
 
 import styles from "./header.module.scss";
 
 interface HeaderProps {
   onOpen: () => void;
   handlingShowingButtonLoadMore: (value: boolean) => void;
+  setNotFoundPokemonName: Dispatch<SetStateAction<string>>;
 }
 
-export function Header({ onOpen, handlingShowingButtonLoadMore }: HeaderProps) {
+export function Header({
+  onOpen,
+  handlingShowingButtonLoadMore,
+  setNotFoundPokemonName,
+}: HeaderProps) {
   const { fetchPokedex, setFavoritesInPokedex, fetchPokemonByName } =
     usePokedex();
   const { cart } = useCart();
   const [cartSize, setCartSize] = useState<number>(0);
   const [pokemonName, setPokemonName] = useState<string>("");
 
-  const handlingSearchPokemonByName = (e: FormEvent) => {
-    e.preventDefault();
+  const handlingSearchPokemonByName = (event) => {
+    event.preventDefault();
+    //resetting the value of the input
+    event.target.lastChild.firstChild.value = "";
+
     if (pokemonName.length > 0) {
       fetchPokemonByName(pokemonName);
       handlingShowingButtonLoadMore(false);
+      setNotFoundPokemonName(pokemonName);
     }
   };
 
@@ -43,7 +52,7 @@ export function Header({ onOpen, handlingShowingButtonLoadMore }: HeaderProps) {
       </div>
 
       <div className={styles.searchBar}>
-        <form onSubmit={handlingSearchPokemonByName}>
+        <form onSubmit={(e) => handlingSearchPokemonByName(e)}>
           <div className={styles.input}>
             <input
               type="text"
@@ -92,14 +101,7 @@ export function Header({ onOpen, handlingShowingButtonLoadMore }: HeaderProps) {
         </nav>
       </div>
       <div className={styles.location}>
-        <p>
-          Location{" "}
-          <span>
-            <FiMapPin color="#ff5048" />
-          </span>{" "}
-          :
-        </p>
-        <p className={styles.name}>SP, Brazil</p>
+        <Location />
       </div>
     </div>
   );
