@@ -1,7 +1,6 @@
 import {
   createContext,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useState,
@@ -34,15 +33,27 @@ const PokedexContext = createContext<PokedexContextData>(
 
 export function PokedexProvider({ children }: PokedexProviderProps) {
   const [pokedex, setPokedex] = useState<PokemonProfile[]>([]);
-  const [favorites, setFavorites] = useState<PokemonProfile[]>([]);
+  const [favorites, setFavorites] = useState<PokemonProfile[]>(() => {
+    const storagedCart =
+      typeof window !== "undefined"
+        ? localStorage.getItem("@IZA:favorites")
+        : null;
+
+    if (storagedCart) {
+      return JSON.parse(storagedCart);
+    }
+
+    return [];
+  });
 
   const fetchPokedex = async (name?: string, offset?: number) => {
     //fetching the names of the pokemons in groups of 10.
     const data = await fetchPokemon(name, offset);
     const pokemonNames = data.results;
-    //getting the pokemon profile for each pokemon name from pokemonNames
+    //getting the pokemon profile for each pokemon name from the pokemon API
     const pokemonProfilesPromises = pokemonNames.map(async (pokemon) => {
       const data = await fetchPokemon(pokemon.name);
+
       //getting only the attributes that I want.
       const rawAttributes = data?.stats.map((stat) => {
         switch (stat.stat.name) {
@@ -79,13 +90,8 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
       pokemonProfilesPromises
     );
 
-    //avoid duplicating pokedex.
-    if (pokedex[0]?.name === pokemonProfiles[0].name) {
-      return;
-    }
-
-    //this code bock guarantees that there wil not be duplicated
-    //pokemon cards.
+    /* this code block guarantees that there will not be duplicated
+    pokemon cards when navigating from favorites to pokedex.*/
     if (!offset) {
       setPokedex([]);
       setPokedex(pokemonProfiles);
@@ -146,10 +152,15 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
       );
 
       setFavorites(filtered);
+      localStorage.setItem("@IZA:favorites", JSON.stringify(filtered));
       return;
     }
 
     setFavorites([...favorites, pokemonProfile]);
+    localStorage.setItem(
+      "@IZA:favorites",
+      JSON.stringify([...favorites, pokemonProfile])
+    );
   };
 
   const setFavoritesInPokedex = () => {
@@ -159,6 +170,8 @@ export function PokedexProvider({ children }: PokedexProviderProps) {
     return;
   };
 
+  /* calling the fetchPokedex inside this effect guarantees that when the app 
+  loads for the first time the pokedex will be filled. */
   useEffect(() => {
     fetchPokedex();
   }, []);
