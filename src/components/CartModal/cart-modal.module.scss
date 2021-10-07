@@ -9,6 +9,9 @@
 
   .cartContent {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+
     min-width: 300px;
     max-width: 500px;
     min-height: 450px;
@@ -43,6 +46,7 @@
     }
 
     .pokemonCard {
+      min-height: 410px;
       padding: 0 1rem;
       margin: 0 auto;
       padding-bottom: 5rem;
@@ -54,8 +58,8 @@
 
     .button {
       position: relative;
-      bottom: 0;
-      width: 100%;
+
+      min-width: 100%;
 
       padding: 1rem;
       border: none;
@@ -103,7 +107,7 @@
     }
   }
 }
-@media screen and (max-height: 500px) {
+@media screen and (max-height: 569px) {
   .container {
     .cartContent {
       max-height: 450px !important;
