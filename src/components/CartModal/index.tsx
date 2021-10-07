@@ -11,7 +11,7 @@ interface CartModalProps {
 }
 
 export function CartModal({ onClose, isOpen }: CartModalProps) {
-  const { cart, removePokemonInCart } = useCart();
+  const { cart, removePokemonInCart, updatePokemonAmount } = useCart();
 
   return (
     <>
@@ -31,6 +31,7 @@ export function CartModal({ onClose, isOpen }: CartModalProps) {
                       <CartPokemonCard
                         pokemon={pokemon}
                         removePokemonInCart={removePokemonInCart}
+                        updatePokemonAmount={updatePokemonAmount}
                       />
                     </div>
                   );
