@@ -16,8 +16,12 @@ export function CartModal({
   isOpen,
   onFinishedBuyOpen,
 }: CartModalProps) {
-  const { cart, removePokemonInCart, updatePokemonAmount, resetCart } =
-    useCart();
+  const {
+    cart,
+    removePokemonInCart,
+    updatePokemonAmount,
+    resetCart,
+  } = useCart();
 
   return (
     <>
@@ -46,6 +50,7 @@ export function CartModal({
               </div>
               <button
                 className={styles.button}
+                disabled={cart.length === 0}
                 onClick={() => {
                   if (cart.length > 0) {
                     resetCart();
