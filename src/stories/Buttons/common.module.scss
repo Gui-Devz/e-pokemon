@@ -1,0 +1,47 @@
+button {
+  font-family: "Rubik";
+  width: 100%;
+  padding: 0.5rem;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 0 0 6px 6px;
+  cursor: pointer;
+
+  background: #ff5048;
+
+  &:hover,
+  &:focus {
+    filter: brightness(0.9);
+  }
+
+  .buttonContent {
+    position: relative;
+    width: fit-content;
+
+    .cartSVG {
+      margin-right: 0.5rem;
+    }
+
+    .cartCount {
+      position: absolute;
+      right: -22px;
+      top: -5px;
+
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      height: 1.1rem;
+      width: 1.3rem;
+
+      border-radius: 50%;
+      background: white;
+
+      color: #ff5048;
+      font-size: 1em;
+      font-weight: bold;
+    }
+  }
+}
