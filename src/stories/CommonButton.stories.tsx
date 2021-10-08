@@ -1,18 +1,15 @@
 import React from "react";
 import { ComponentStory, ComponentMeta, storiesOf } from "@storybook/react";
 
-import { Common } from "./Buttons/Common";
+import { AddToCartButton } from "./Buttons/AddToCartButton";
 
 export default {
-  title: "E-pokemon/CommonButton",
-  component: Common,
-} as ComponentMeta<typeof Common>;
+  title: "E-pokemon/BtnAddToCart",
+  component: AddToCartButton,
+} as ComponentMeta<typeof AddToCartButton>;
 
-const Template: ComponentStory<typeof Common> = (args) => <Common {...args} />;
+const Template: ComponentStory<typeof AddToCartButton> = (args) => (
+  <AddToCartButton {...args} />
+);
 
 export const primary = Template.bind({});
-
-primary.args = {
-  primary: true,
-  label: "Button",
-};
