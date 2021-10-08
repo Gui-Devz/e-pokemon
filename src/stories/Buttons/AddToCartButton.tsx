@@ -6,7 +6,7 @@ interface CommonProps {
   amount?: number;
 }
 
-export function Common({ onClick, amount }: CommonProps) {
+export function AddToCartButton({ onClick, amount }: CommonProps) {
   return (
     <button onClick={() => onClick}>
       <span className={styles.buttonContent}>
