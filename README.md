@@ -1,6 +1,6 @@
 <div align="center">
   <h1 align="center">Pokemon online shop</h1>
-  <img src="https://iza.com.vc/_nuxt/img/logo.d0c321f.png" height ="40px" width="40px">
+  <img src="https://iza.com.vc/_nuxt/img/logo.d0c321f.png" height ="100px" width="150px">
 
 </div>
 
