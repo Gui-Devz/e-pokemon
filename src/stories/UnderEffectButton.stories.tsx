@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { UnderEffect } from "./Buttons/UnderEffect";
 
 export default {
-  title: "E-pokemon/UnderEffectButton",
+  title: "E-pokemon/BtnUnderEffect",
   component: UnderEffect,
 } as ComponentMeta<typeof UnderEffect>;
 
