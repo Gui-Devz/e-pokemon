@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { SidedCartModal } from "./Modals/SidedCartModal";
 
 export default {
-  title: "E-pokemon/SidedModal",
+  title: "E-pokemon/SidedCartModal",
   component: SidedCartModal,
 } as ComponentMeta<typeof SidedCartModal>;
 
