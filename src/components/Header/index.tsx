@@ -23,8 +23,11 @@ export function Header({
   handlingShowingButtonLoadMore,
   setNotFoundPokemonName,
 }: HeaderProps) {
-  const { fetchPokedex, setFavoritesInPokedex, fetchPokemonByName } =
-    usePokedex();
+  const {
+    fetchPokedex,
+    setFavoritesInPokedex,
+    fetchPokemonByName,
+  } = usePokedex();
   const { cart } = useCart();
   const [cartSize, setCartSize] = useState<number>(0);
   const [pokemonName, setPokemonName] = useState<string>("");
@@ -35,7 +38,7 @@ export function Header({
     event.target.lastChild.firstChild.value = "";
 
     if (pokemonName.length > 0) {
-      fetchPokemonByName(pokemonName);
+      fetchPokemonByName(pokemonName.toLowerCase());
       handlingShowingButtonLoadMore(false);
       setNotFoundPokemonName(pokemonName);
     }
