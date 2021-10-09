@@ -27,6 +27,11 @@
       font-size: 1.2em;
 
       padding: 1rem;
+
+      &:hover,
+      &:focus {
+        filter: brightness(0.9);
+      }
     }
   }
 }

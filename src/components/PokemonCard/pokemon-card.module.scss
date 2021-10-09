@@ -99,6 +99,11 @@
 
       background: var(--red-500);
 
+      &:hover,
+      &:focus {
+        filter: brightness(0.9);
+      }
+
       .buttonContent {
         position: relative;
         width: fit-content;
