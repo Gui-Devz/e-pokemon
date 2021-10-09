@@ -42,6 +42,7 @@ export function SidedCartModal({
                   })}
               </div>
               <button
+                disabled={productCards ? productCards.length === 0 : true}
                 className={styles.button}
                 onClick={() => onFinishedBuying}
               >
