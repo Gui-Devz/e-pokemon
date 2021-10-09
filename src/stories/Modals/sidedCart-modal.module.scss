@@ -46,7 +46,7 @@
     }
 
     .card {
-      min-height: 410px;
+      min-height: 320px;
       padding: 0 1rem;
       margin: 0 auto;
       padding-bottom: 5rem;
@@ -71,6 +71,17 @@
       text-transform: uppercase;
       font-weight: 500;
       font-size: 1.1em;
+
+      &:disabled,
+      &:disabled:hover {
+        filter: brightness(0.5);
+        cursor: not-allowed;
+      }
+
+      &:not(&:disabled):hover,
+      &:focus {
+        filter: brightness(0.9);
+      }
     }
   }
 }
