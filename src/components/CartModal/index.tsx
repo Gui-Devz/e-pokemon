@@ -50,7 +50,7 @@ export function CartModal({
               </div>
               <button
                 className={styles.button}
-                disabled={cart.length === 0}
+                disabled={cart ? cart.length === 0 : true}
                 onClick={() => {
                   if (cart.length > 0) {
                     resetCart();
