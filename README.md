@@ -63,6 +63,8 @@
 - 🔵 [Context API][contextapi] — React ContextAPI is the most practical and useful way for handling and sharing global states.(My personal opinion here 🙋‍♂️)
 - 💹 [SASS][sass] — Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.
 - 💹 [Storybook][storybook] — Storybook is an open source tool for building UI components and pages in isolation.
+- 💹 [Pokemon API][pokemonapi] — All the Pokémon data you'll ever need in one place, easily accessible through a modern RESTful API.
+- 💹 [IP-API][ipapi] — Geo-localization by IP address through this API.
 
 ## :information_source: How To Use
 
@@ -87,7 +89,7 @@ $ yarn dev
 
 ```
 
-### RunningStorybook
+### Running Storybook
 
 ```bash
 
@@ -136,3 +138,6 @@ Made with ♥ by Guilherme Zagari :wave: [Get in touch!](https://www.linkedin.co
 [ip-api]: https://ip-api.com/
 [typescript]: https://www.typescriptlang.org/
 [contextapi]: https://pt-br.reactjs.org/docs/context.html
+[contextapi]: https://pt-br.reactjs.org/docs/context.html
+[pokemonapi]: https://pokeapi.co/
+[ipapi]: https://ip-api.com/
