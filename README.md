@@ -68,7 +68,7 @@
 
 To clone and run this application, you'll need [Git](https://git-scm.com), [Node.js][nodejs] and [Yarn][yarn] installed on your computer.
 
-### Install Front-end
+### Installing and running the app
 
 ```bash
 # Clone this repository
@@ -84,6 +84,17 @@ $ yarn
 $ yarn dev
 
 # running on port 3000
+
+```
+
+### RunningStorybook
+
+```bash
+
+# Run
+$ yarn storybook
+
+# running on port 6006
 
 ```
 
